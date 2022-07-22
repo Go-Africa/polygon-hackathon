@@ -1,0 +1,387 @@
+<div *ngIf="!loading">
+  <section class="w-100 my-5">
+    <div class="container">
+      <div class="row justify-content-center p-5">
+      </div>
+    </div>
+  </section>
+  <div class="position-relative mb-5">
+    <div class="shape overflow-hidden text-white">
+      <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+      </svg>
+    </div>
+  </div>
+  <section class="section p-5 my-5">
+    <div class="container">
+      <div class="row justify-content-center p-5 pb-0 mb-0">
+        <ngx-loading-spinner mini></ngx-loading-spinner>
+      </div>
+      <div class="row justify-content-center px-5">
+        <p class="text-center">
+          <small>Loading...</small>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- After loading complete -->
+<div *ngIf="loading">
+  <!-- Hero Start -->
+  <section class="bg-half bg-light d-table w-100" id="home" [style]="'background-image: url(' + project?.image +');'">
+    <div class="container pt-4 ">
+      <div class="row justify-content-center">
+        <div class="col-lg-12 text-center">
+          <div class="page-next-level foreground rounded">
+            <h2> {{ project.title }} </h2>
+            <ul class="list-unstyled mt-4">
+              <li class="list-inline-item h6 user text-muted mr-2 text-capitalize"><i class="mdi mdi-account"></i> {{
+                project.appUser.name }} </li>
+              <li class="list-inline-item h6 date text-muted"><i class="mdi mdi-calendar-check"></i> {{
+                project.date|date:'dd/MM/yyyy'}}
+              </li>
+            </ul>
+            <div class="widget">
+              <div class="row justify-content-center">
+                <h3 class="text-center text-primary" *ngIf="investApproved();else noInvestor">
+                  You are now a shareolder
+                  <button class="btn btn-primary mt-2" (click)="investNow(invest)" *ngIf="getPart()>0">Add new shares</button>
+                </h3>
+
+                <ng-template #noInvestor>
+                  <button class="btn btn-primary" (click)="investNow(invest)" *ngIf="getPart()>0">Be a shareolder</button>
+                </ng-template>
+              </div>
+            </div>
+
+            <!-- Montant total du projet -->
+            <div class="row justify-content-center mt-4">
+              <div class="text-primary border rounded border-primary p-2" style="font-size: inherit;">
+                <strong class="text-uppercase">Amount raised : </strong>
+                <strong><span class="text-muted">{{ (convertNumber(this.investors.currentBalance) / 1e6)|number }} $</span></strong>
+              </div>
+            </div>
+          </div>
+          <div class="page-next-level">
+            <div class="page-next">
+              <nav aria-label="breadcrumb" class="d-inline-block">
+                <ul class="breadcrumb bg-white rounded shadow mb-0">
+                  <li class="breadcrumb-item"><a routerLink="/">Go-Africa</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Project Detail</li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <!--end col-->
+      </div>
+      <!--end row-->
+    </div>
+    <!--end container-->
+  </section>
+  <!--end section-->
+  <!-- Hero End -->
+
+  <!-- Shape Start -->
+  <div class="position-relative">
+    <div class="shape overflow-hidden text-white">
+      <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+      </svg>
+    </div>
+  </div>
+  <!--Shape End-->
+
+  <!-- Blog STart -->
+  <section class="section">
+    <div class="container">
+      <div class="row">
+        <!-- BLog Start -->
+        <div class="col-lg-8 col-md-6">
+          <div class="card blog blog-detail border-0 shadow rounded">
+
+            <!-- Project gallery Images -->
+            <div class="rounded-top img-fluid mt-0">
+              <app-project-image-gallery [images]="images" [default]="project.image"></app-project-image-gallery>
+            </div>
+            <div class="card-body content">
+              <div class="clearfix">
+                <div class="float-left">
+                  <h6><i class="mdi mdi-tag text-primary mr-1"></i><a href="javascript:void(0)" class="text-primary">{{
+                      project.category?.nomCategorie }}</a>
+                  </h6>
+                </div>
+              </div>
+
+              <!-- Project video -->
+              <!-- <div class="border-bottom py-5">
+                <h5 class="card-title mb-2">Description video</h5>
+                <p class="text-center">
+                  <plyr style="display: block; width: auto;" plyrPoster="./assets/images/go-africa-logo.png"
+                    plyrTitle="Video de description" [plyrSources]="videoSources" (plyrInit)="hasInit($event)"
+                    (plyrPlay)="played($event)"></plyr>
+                </p>
+              </div> -->
+
+              <!-- Project description -->
+              <p class="mt-3 p-3 text-muted" [innerHtml]="project.descText"></p>
+            </div>
+          </div>
+
+          <!-- Project documents -->
+          <div class="card shadow rounded border-0 mt-4">
+            <div class="card-body">
+              <h5 class="card-title mb-0">Project Documents</h5>
+
+              <div class="row">
+                <div class="col-lg-6 mt-4 pt-2">
+                  <div class="card blog rounded border-0 shadow">
+                    <div class="card-body content">
+                      <h5 class=" text-center"><a href="javascript:void(0)" class="card-title title text-dark">Business
+                          plan</a></h5>
+                      <div class="post-meta d-flex justify-content-center mt-3">
+                        <a [href]="businessPlan ? businessPlan.url : '#'" class="text-primary" download><i
+                            class="mdi mdi-download-circle mdi-48px"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--end col-->
+                <div class="col-lg-6 mt-4 pt-2">
+                  <div class="card blog rounded border-0 shadow">
+                    <div class="card-body content">
+                      <h5 class=" text-center"><a href="javascript:void(0)" class="card-title title text-dark">location
+                          map</a></h5>
+                      <div class="post-meta d-flex justify-content-center mt-3">
+                        <a [href]="planLocalisation ? planLocalisation.url : '#'" class="text-primary stretched-link"><i
+                            class="mdi mdi-download-circle mdi-48px"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--end col-->
+
+              </div>
+              <!--end row-->
+            </div>
+          </div>
+
+          <!-- Project comments -->
+          <app-project-comments [project]="project" [userId]="user.id"></app-project-comments>          
+        </div>
+
+        <!-- START SIDEBAR -->
+        <div class="col-lg-4 col-md-6 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
+          <div class="card border-0 sidebar sticky-bar rounded shadow">
+            <div class="card-body">
+
+              <!-- Project already acquired money -->
+              <div class="row justify-content-center mt-4">
+                <div class="text-primary border rounded border-primary p-2" style="font-size: inherit;">
+                  <strong class="text-uppercase">Amount Raised : </strong> <strong><span class="text-muted">{{
+                      (convertNumber(this.investors.currentBalance) / 1e6)|number }}
+                      $</span></strong>
+                </div>
+              </div>
+              <!-- CATAGORIES -->
+
+              <div class="card border-0 sidebar my-4 rounded shadow" *ngIf="investApproved(); else addShare">
+                <div class="widget m-4 p-2 text-muted">
+                  <p>You are now a shareolder of this project, we will notify you about updates... <br>
+                    Thank you for trusting us!
+                  </p>
+                  <p>
+                    <a class="text-primary" routerLink="/all-projects">Click Here</a>
+                    to access other invest opportunites.
+                  </p>
+                </div>
+
+                <!-- Add part to a project -->
+                <div class="widget mr-4 ml-4 mb-4 p-2 text-muted"
+                  *ngIf="getPart()>0">
+                  <h4 class="widget-title">Add new shares</h4>
+                  <p class="text-center">
+                    <button class="btn btn-primary" (click)="investNow(invest)">
+                      Add
+                    </button>
+                  </p>
+                  <!-- </p> -->
+                </div>
+              </div>
+              <div class="card border-0 my-4 sidebar rounded shadow"
+                *ngIf="(getPart()<=0)">
+                <div class="widget m-4 p-2">
+                  <p>The fundraising is now closed, <a class="text-primary" routerLink="/all-projects">Click here</a>
+                    to access other invest opportunites.
+                  </p>
+                </div>
+              </div>
+              <ng-template #addShare>
+                <div class="text-center my-4" *ngIf="getPart()>0">
+                  <button class="btn btn-primary" (click)="investNow(invest)">
+                    Be a shareolder
+                  </button>
+                </div>
+              </ng-template>
+
+              <!-- CATAGORIES -->
+              <div class="widget mb-4 pb-2">
+                <h4 class="widget-title">Categories</h4>
+                <app-skeleton-loading-data dataType="categories" *ngIf="!loadCats"></app-skeleton-loading-data>
+                <ul class="list-unstyled mt-4 mb-0 blog-catagories" *ngIf="loadCats">
+                  <li *ngFor="let cat of cats"><a [routerLink]="['/all-projects']" [queryParams]="{catId: cat.id}">{{
+                      cat.nomCategorie }}</a> <span class="float-right">{{ cat.nombreProjet }}</span></li>
+                </ul>
+              </div>
+
+              <!-- Other infos -->
+              <div class="widget mb-2 pb-2">
+                <h4 class="widget-title">Infos</h4>
+                <div class="my-2">
+                  <ul class="list-unstyled mt-4 mb-0 blog-catagories">
+                    <li>
+                      <a>Coverage rate</a> <span class="float-right">{{ '(' + getTaux(project) + '%)' }}</span>
+                      <div class="progress-box">
+                        <div class="progress">
+                          <div class="progress-bar position-relative bg-primary"
+                            [style]="'width:' + getTaux(project) +'%'">
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="mt-2" ngbTooltip="Cliquez pour avoir la liste des investisseurs" placement="bottom">
+                      <a href="javascript:void(0);" (click)="showInvestor(investor)">investments</a> 
+                      <span class="float-right">{{ investors?.investments.length }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+
+              <!-- <div class="widget" *ngIf="loadinvests">
+                <div class="row justify-content-center">
+                  <button class="btn btn-primary" (click)="investNow(invest)" *ngIf="!canInvestOrNot() && !isPaymentPending() && !isInvestCanceled()
+                  && (+getTaux(project)<100)">
+                    Devenir actionnaire
+                  </button>
+                  <button class="btn btn-primary" (click)="showinProgressPay(progressPay)" *ngIf="isPaymentPending()">En
+                    attente</button>
+                  <p class="text-center text-muted" *ngIf="(isAdmin || investApproved() || (project.appUser.id === user.id)) &&
+                  (+getTaux(project)>=100)">
+                    <a [routerLink]="['/reporting',project.projId]" [queryParams]="{ project: project.title}"
+                      class="btn btn-primary">
+                      Accédez au reporting <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                  </p>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <!--end col-->
+        <!-- END SIDEBAR -->
+      </div>
+      <!--end row-->
+    </div>
+    <!--end container-->
+  </section>
+  <!--end section-->
+  <!-- Blog End -->
+
+  <!--  Video description-->
+  <ng-template #content let-modal>
+    <div class="card shadow-md">
+      <div class="card-header">
+        <div class="card-title h5 text-muted">Descripption video
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <small class="text-primary">Please wait we are trying to load video !!!</small>
+      </div>
+      <div class="card-body p-5">
+        <div class="col-12">
+        </div>
+        <div class="row justify-content-center">
+          <iframe width="500px" height="400px" loading="lazy"
+            [src]="videoURL(project.descriptionVideo ? project.descriptionVideo : 'https://www.youtube.com/embed/Zuq8Hsdt3SI')"
+            title="Video de description du projet" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <!--  Investors list-->
+  <ng-template #investor let-modal>
+    <div class="card shadow-lg">
+      <div class="card-header">
+        Investor list
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="card-body scrollBar">
+        <div class="widget mb-4 pb-2">
+          <div class="mt-4">
+            <!-- <div class="clearfix post-recent"> -->
+            <table class="table">
+              <thead>
+                <tr class="table-bordered">
+                  <th class="text-muted">Address</th>
+                  <th class="text-muted">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let i of investors.investments">
+                  <td class="text-muted">{{ i[3] }}</td>
+                  <td class="text-muted">{{ (convertNumber(i[4])/1e6)|number }} $</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <!--  Investment method 1 (Enter the amount and receive the payment instructions -->
+  <ng-template #invest let-modal>
+    <div class="card shadow-lg">
+      <div class="card-header text-muted">
+        Invest now to "{{ project.title }}"
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="card-img-top rounded-md">
+        <div class="row justify-content-center pt-4">
+          <img src="assets/images/go-africa/payment/cash.png" alt="" class="img-fluid" height="200" width="200">
+        </div>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="investForm" (ngSubmit)="buyPart()">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group position-relative" style="margin-bottom: 0px;">
+                <label>Number of shares</label>
+                <i-feather name="pie-chart" class="fea icon-sm icons"></i-feather>
+                <input type="number" class="form-control pl-5" placeholder="Entrez le montant" formControlName="amount">
+              </div>
+              <small class="text-primary">*Amount of 1 share: {{ project.montantMinimum }} $</small><br>
+              <small class="text-primary">*Rest of shares : {{ getPart() }}</small>
+            </div>
+          </div>
+          <div class="row justify-content-center mt-2" *ngIf="send">
+            <img src="assets/images/go-africa/loading.gif" class="img-fluid" width="150" height="150" alt="loading">
+          </div>
+          <div class="row mt-4 justify-content-center" *ngIf="!send">
+            <button type="submit" class="btn btn-primary">Invest Now <i class="uil uil-check-circle ml-1"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+</div>

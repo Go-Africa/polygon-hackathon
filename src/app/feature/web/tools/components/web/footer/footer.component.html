@@ -1,0 +1,172 @@
+<!--div class="position-relative mt-5 bg-light">
+  <div class="shape overflow-hidden bg-light">
+    <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+    </svg>
+  </div>
+</!--div-->
+
+
+<a href="javascript: void(0);" class="btn btn-icon btn-soft-primary back-to-top" id="back-to-top"
+  [ngxScrollTo]="'#home'">
+  <i-feather name="arrow-up" class="icons"></i-feather>
+</a>
+<!-- Footer Start -->
+<footer class="footer bg-light" [class]="navClass">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-12 mb-0 mb-md-4 pb-0 pb-md-2">
+        <a class="logo" routerLink="/" *ngIf="getTheme()== 'dark'">
+          <img src="assets/images/logoDark.png" class="l-light logoImg" height="50" alt="">
+        </a>
+        <a class="logo" routerLink="/" *ngIf="getTheme()!= 'dark'">
+          <img src="assets/images/go-africa-logo.png" class="l-dark logoImg" height="50" alt="">
+        </a>
+        <p class="mt-4" style="padding-left: 12px;">
+			Decentralized finance and crowdfunding for the development of the agro-pastoral sector.
+        </p>
+
+        <a class="" target="_blank"
+          href="https://play.google.com/store/apps/details?id=io.goafrica.go_africa_mobile_app"><img
+            src="./assets/images/go-africa/store.png" class="logoImg" style="max-height: 70px;" alt=""></a>
+      </div>
+
+      <div class="col-lg-2 col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
+				<h4 class="footer-head">About</h4>
+				<ul class="list-unstyled footer-list mt-4">
+					<li>
+						<a routerLink="/" class="text-foot text-muted"><i class="mdi mdi-chevron-right mr-1"></i>
+							Home</a>
+					</li>
+					<li>
+						<a routerLink="/about" class="text-foot text-muted"><i class="mdi mdi-chevron-right mr-1"></i> About </a>
+					</li>
+					<li>
+						<a routerLink="/contact" class="text-foot text-muted"><i class="mdi mdi-chevron-right mr-1"></i>
+							Contact</a>
+					</li>
+					<li *ngIf="!auth">
+						<a routerLink="/register" class="text-foot text-muted"><i
+								class="mdi mdi-chevron-right mr-1"></i> Register</a>
+					</li>
+					<li *ngIf="!auth">
+						<a routerLink="/login" class="text-foot text-muted"><i class="mdi mdi-chevron-right mr-1"></i>
+							Login</a>
+					</li>
+					<li *ngIf="auth">
+						<a routerLink="/me" class="text-foot text-muted"><i class="mdi mdi-chevron-right mr-1"></i> My Account</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="col-lg-4 col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
+				<h4 class="footer-head text-capitalize">Infos</h4>
+				<ul class="list-unstyled footer-list mt-4">
+					<li>
+						<a routerLink="/page-terms" class="text-foot text-muted"><i
+								class="mdi mdi-chevron-right mr-1"></i> Legal information</a>
+					</li>
+					<li>
+						<a routerLink="/cookie" class="text-foot text-muted"><i class="mdi mdi-chevron-right mr-1"></i>
+							Cookies Managment</a>
+					</li>
+					<li>
+						<a routerLink="/privacy" class="text-foot text-muted"><i class="mdi mdi-chevron-right mr-1"></i>Privacy Policy</a>
+					</li>
+					<li>
+						<a routerLink="/changelog" class="text-foot text-muted"><i
+								class="mdi mdi-chevron-right mr-1"></i> Terms and Conditions</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="col-lg-3 col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
+				<h4 class="footer-head">Newsletter</h4>
+				<p class="mt-4">Subscribe to our newsletter to receive latest news.</p>
+				<form method="POST" action="home" [formGroup]="newsletterForm" (submit)="onSubmitNewsletter()">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="foot-subscribe form-group position-relative">
+								<label>Enter your email address <span class="text-danger">*</span></label>
+								<i data-feather="mail" class="fea icon-sm icons"></i>
+								<i-feather name="mail" class="fea icon-sm icons"></i-feather>
+								<input type="email" name="email" id="emailsubscribe" style="color: white !important;"
+									class="form-control pl-5 rounded" placeholder="Votre email : " required
+									formControlName="email" />
+							</div>
+							<div class="foot-subscribe form-group position-relative"
+								*ngIf="(newsletterForm.invalid && (newsletterForm.get('email')?.dirty) || sent)">
+								<small *ngIf="newsletterForm.get('email')?.hasError('required') &&
+					!newsletterForm.get('email')?.hasError('email')" class="text-danger">
+									Email is required
+								</small>
+								<small *ngIf="newsletterForm.get('email')?.hasError('email')" class="text-danger">
+									Enter a valid email address
+								</small>
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<button type="submit" id="submitsubscribe" name="envoyer" *ngIf="!load"
+								class="btn btn-soft-primary btn-block">Subscribe</button>
+							<button *ngIf="load" class="btn btn-soft-primary btn-block">
+								<ngx-loading-spinner mini></ngx-loading-spinner>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+    </div>
+    <!--end row-->
+    <!-- <div class="row">
+			<div class="col-12">
+				<div class="mt-0 ml-0 pl-0">
+					<a class="" target="_blank"
+						href="https://play.google.com/store/apps/details?id=io.goafrica.go_africa_mobile_app"><img
+							src="./assets/images/go-africa/store.png" class="img-fluid" style="max-height: 100px;"
+							alt=""></a>
+				</div>
+			</div>
+		</div> -->
+  </div>
+  <!--end container-->
+</footer>
+<!--end footer-->
+<footer class="footer footer-bar bg-light">
+  <div class="container text-center">
+    <div class="row align-items-center">
+      <div class="col-sm-6">
+        <div class="text-sm-left">
+          <p class="mb-0">
+            © {{ nowYear }} Go Africa. Made by
+            <a href="#" target="_blank" class="text-reset">Go Africa Dev Team</a>.
+          </p>
+        </div>
+      </div>
+      <!--end col-->
+
+      <div class="col-sm-6 mt-4 mt-sm-0 pt-2 pt-sm-0">
+        <ul class="list-unstyled text-sm-right mb-0">
+          <li class="list-inline-item ml-1">
+            <div class="btnPayement momo"></div>
+          </li>&nbsp;
+          <li class="list-inline-item">
+            <div class="btnPayement om"></div>
+          </li>&nbsp;
+          <li class="list-inline-item ml-1">
+            <div class="btnPayement stripe"></div>
+          </li>&nbsp;
+          <li class="list-inline-item ml-1">
+            <div class="btnPayement cash"></div>
+          </li>
+          <li class="list-inline-item ml-1">
+          </li>
+        </ul>
+      </div>
+      <!--end col-->
+    </div>
+    <!--end row-->
+  </div>
+  <!--end container-->
+</footer>
+<!--end footer-->
+<!-- Footer End -->

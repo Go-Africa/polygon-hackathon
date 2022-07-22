@@ -1,0 +1,17 @@
+ <!-- Start Style switcher -->
+ <!--div [hidden]="isHidden" id="style-switcher" [ngClass]="load ? 'd-block' : 'd-none'" style="left: 0px;" class="bg-light border p-3 pt-2 pb-2"
+   [style]="isVisible ? 'left: 0px' : 'left: -189px' ">
+   <h3 class="title text-center pt-3 mb-0 border-top">Theme</h3>
+
+   <div class="text-center">
+     <a href="javascript: void(0);" class="btn btn-sm w-100 btn-dark dark-version t-dark mt-2"
+       (click)="setDark()">Dark</a>
+     <a href="javascript: void(0);" class="btn btn-sm w-100 btn-dark light-version t-light mt-2"
+       (click)="setLight()">Light</a>
+   </div>
+   <div class="bottom">
+     <a href="javascript: void(0);" class="settings bg-white shadow d-block" (click)="onChangeSwitch()">
+       <i class="mdi mdi-cog ml-1 mdi-24px position-absolute mdi-spin text-primary"></i></a>
+   </div>
+ </!--div-->
+ <!-- End Style switcher -->

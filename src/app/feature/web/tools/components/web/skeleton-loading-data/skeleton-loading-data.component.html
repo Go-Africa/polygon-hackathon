@@ -1,0 +1,85 @@
+<section *ngIf="dataType === 'categories'">
+    <div class="d-flex">
+        <div class="col-10">
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="15"></ng-skeleton>
+        </div>
+        <div class="col-2">
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="15" [skelCircle]="true"></ng-skeleton>
+        </div>
+    </div>
+    <div class="d-flex my-2">
+        <div class="col-10">
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="15"></ng-skeleton>
+        </div>
+        <div class="col-2">
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="15" [skelCircle]="true"></ng-skeleton>
+        </div>
+    </div>
+    <div class="d-flex mb-2">
+        <div class="col-10">
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="15"></ng-skeleton>
+        </div>
+        <div class="col-2">
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="15" [skelCircle]="true"></ng-skeleton>
+        </div>
+    </div>
+    <div class="d-flex mb-2">
+        <div class="col-10">
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="15"></ng-skeleton>
+        </div>
+        <div class="col-2">
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="15" [skelCircle]="true"></ng-skeleton>
+        </div>
+    </div>
+</section>
+
+<section *ngIf="dataType === 'featuredProjects'">
+    <div class="d-flex">
+        <div class="col-3">
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="30"></ng-skeleton>
+        </div>
+        <div class="col-9">
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="12" class="mb-2"></ng-skeleton>
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="7" [skelWidth]="50"></ng-skeleton>
+        </div>
+    </div>
+
+    <div class="d-flex">
+        <div class="col-3">
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="30"></ng-skeleton>
+        </div>
+        <div class="col-9">
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="12" class="mb-2"></ng-skeleton>
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="7" [skelWidth]="50"></ng-skeleton>
+        </div>
+    </div>
+</section>
+
+<section *ngIf="dataType === 'informations'">
+    <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="20" class="mb-2"></ng-skeleton>
+    <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="15" class="my-4"></ng-skeleton>
+    <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="15" class="my-4"></ng-skeleton>
+    <div class="d-flex justify-content-center">
+        <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="40" class="mb-2" [skelWidth]="80"></ng-skeleton>
+    </div>
+</section>
+
+<section class="col-12 my-2" *ngIf="dataType === 'allcats'">
+<owl-carousel-o id="customer-testi" [options]="customOptions">
+      <ng-template carouselSlide >
+        <div class="card border-0 px-4">
+          <div class="card-img-top">
+            <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="100"></ng-skeleton>
+          </div>
+          <div class="card-body row">
+            <div class="col-10" style="padding-top: 10px; padding-left: 0px;">
+              <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="30"></ng-skeleton>
+            </div>
+            <div class="col-2 p-2 text-right">
+              <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="30" [skelCircle]="true"></ng-skeleton>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+  </owl-carousel-o>
+</section>

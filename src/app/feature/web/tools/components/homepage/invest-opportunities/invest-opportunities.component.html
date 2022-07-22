@@ -1,0 +1,117 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div class="section-title text-center mb-4 pb-2">
+        <h4 class="title mb-4">Investment opportunities</h4>
+        <p class="text-muted para-desc mb-0 mx-auto">Invest now in one of our projects and become one of <span
+            class="text-primary font-weight-bold">its first shareholders</span></p>
+      </div>
+    </div>
+    <!--end col-->
+  </div>
+  <!--end row-->
+  <div class="row justify-content-center" *ngIf="!loading">
+    <div class="col-4 pr-2" *ngFor="let i of [1,2,3]">
+      <div class="card blog rounded border-0 shadow overflow-hidden bg-transparent border-none">
+        <div class="position-relative">
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="150"></ng-skeleton>
+        </div>
+        <div class="position-relative">
+          <div class="shape overflow-hidden text-white">
+            <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body content border-0">
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="20"></ng-skeleton>
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" class="my-2" [skelHeight]="15"></ng-skeleton>
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="15"></ng-skeleton>
+          <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="60"></ng-skeleton>
+        </div>
+        <div class="card-footer d-flex justify-content-between border-0">
+          <div class="col-10">
+            <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="10"></ng-skeleton>
+          </div>
+
+          <div class="col-2">
+            <ng-skeleton [skelDark]="shared.getTheme() === 'dark'" [skelHeight]="10" [skelCircle]="true"></ng-skeleton>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="loading">
+    <div class="row" *ngIf="tops.length > 0">
+      <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2" *ngFor="let top of tops | slice: 0:3">
+        <div class="card blog rounded border-0 shadow overflow-hidden">
+          <div class="position-relative" style="cursor: pointer;" [routerLink]="['/projects', top.projId, 'details']">
+            <img [src]="top.image" class="card-img-top" alt="...">
+            <div class="overlay bg-dark"></div>
+            <div class="teacher d-flex align-items-center">
+              <img [src]="top.appUser?.profilePicture || 'assets/images/go-africa/default-avatar.png'"
+                class="avatar avatar-md-sm rounded-circle shadow" alt="">
+              <div class="ml-2">
+                <h6 class="mb-0"><a href="javascript:void(0)" class="text-light user text-capitalize">{{
+                    top.appUser.name }}</a></h6>
+                <p class="text-light small my-0">Owner</p>
+              </div>
+            </div>
+            <div class="course-fee bg-white text-center shadow-lg rounded-circle">
+              <h6 class="text-primary font-weight-bold fee">{{ shared.numberFormat(top.montantDemander) }}</h6>
+            </div>
+          </div>
+          <div class="position-relative">
+            <div class="shape overflow-hidden text-white">
+              <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="card-body content">
+            <small class="text-primary">{{ top.category?.nomCategorie }}</small>
+            <h5 class="mt-2"><a [routerLink]="['/projects', top.projId, 'details']"
+                class="title text-dark stretched-link">{{ top.title }}</a></h5>
+            <p class="text-muted" [innerHtml]="top.descText.slice(0,65) + '...'"></p>
+            <p>
+              <a [routerLink]="'/projects/' + top.projId + '/details'" class="text-primary mb-4">Read More
+                <i-feather name="chevron-right" class="fea icon-sm"></i-feather>
+              </a>
+            </p>
+            <div class="progress-box py-4">
+              <div class="progress">
+                <div class="progress-bar position-relative bg-primary my-0"
+                  [style]="'width:' + getTaux(top) +'%'">
+                  <div class="progress-value d-block text-primary h6 my-0">{{ getTaux(top)
+                    }}%</div>
+                </div>
+              </div>
+            </div>
+            <ul class="list-unstyled d-flex justify-content-between border-top mt-3 pt-3 mb-0">
+              <li class="text-muted small">
+                <i class="bold">$</i>
+                {{ top.montantDemander|number }}
+              </li>
+              <li class="text-muted small ml-3">
+                <i-feather name="flag" class="fea icon-sm text-primary"></i-feather>
+                {{ firstCountry(top.pays) }}*
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="tops.length <= 0">
+      <p class="col-12 text-center">
+        <img src="./assets/images/comming_soon.png" class="img-fluid" style="max-height: 350px;" alt="">
+      </p>
+      <p class="col-12 text-center">
+        We are preparing the best projects for you... be patient !
+      </p>
+    </div>
+    <div class="row justify-content-end my-2 mr-1">
+      <a routerLink="/all-projects" class="btn btn-primary mt-3">Read more<i class="mdi mdi-chevron-right"></i></a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+.downloadBut{
+  background-color: #C2DF9D;
+  border-radius: 6px;
+  /*height: 50%;
+  width: 100%;*/
+  padding: 0;
+  cursor: pointer;
+}
+.uploadedImg{
+  width: 100%;
+  height: 320px;
+  border-radius: 6px;
+}
+
+.button-control{
+  top: 0;
+  right: 0;
+  z-index: 15;
+}
+
+.img-control{
+  top: 0;
+  right: 0;
+}
+
+.btnUpload, .btnReset{
+  color: white;
+  border: none;
+  border-radius: 100%;
+  background-color: rgba(100,108,108, 0.4);
+  padding: 7px ;
+}
+.btnUpload{
+ /* border: 1px solid #77B825;
+  border-radius: 4px;*/
+  margin: 12px 6px 0px 0px;
+}
+
+.btnReset{
+  margin: 12px 12px 12px 0px;
+}
+
+.btnUpload:hover, .btnReset:hover{
+  background-color: rgb(52,60,68, 0.6);
+  transition: background-color 1s;
+}
+
+.uploadedButton{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  border: 1px solid rgb(43,57,63);
+  background-color: rgba(43, 57, 63, 0.377);
+  color: rgb(43,57,63);
+  font-size: 16px;
+  padding: 12px 24px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+.wrap-form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.insertVid{
+  border: 1px solid #77B825;
+  color: #77B825;
+  font-size: small;
+}
+.submitButton{
+  background-color: #77B825;
+  color: white;
+  font-size: large;
+}
+.example-full-width{
+ width: 100%;
+}
+::ng-deep .mat-form-field-can-float:focus{
+  color: rgb(137, 199, 74)!important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

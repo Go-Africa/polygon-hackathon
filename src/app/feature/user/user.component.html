@@ -1,0 +1,168 @@
+<!-- Hero Start -->
+<section class="bg-profile d-table w-100" id="home"
+  style="background: url('assets/images/account/bg.png') center center;">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card public-profile border-0 rounded shadow" style="z-index: 1;">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-lg-2 col-md-3 text-md-left text-center">
+                <img [src]="user?.profilePicture ?? 'assets/images/go-africa/default-avatar.png'"
+                  class="avatar avatar-large rounded-circle shadow d-block mx-auto" alt="">
+              </div>
+              <!--end col-->
+              <div class="col-lg-10 col-md-9">
+                <div class="row align-items-end">
+                  <div class="col-md-7 text-md-left text-center mt-4 mt-sm-0">
+                    <h3 class="title mb-0">{{ user?.name }}</h3>
+                    <small class="text-muted h6 mr-2">{{ user?.email }}</small>
+                    <ul class="list-inline mb-0 mt-3">
+                      <li class="list-inline-item mr-2"><a href="javascript:void(0)" class="text-muted"
+                          title="Téléphone">
+                          <i-feather name="phone" class="fea icon-sm mr-2"></i-feather>
+                          {{ user?.tel ?? 'Not set !' }}
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <!--end col-->
+                  <div class="col-md-5 text-md-right text-center">
+                    <ul class="list-unstyled social-icon social mb-0 mt-4">
+                      <li class="list-inline-item"><a routerLink="my-projects" routerLinkActive="active" class="rounded"
+                          placement="bottom" ngbTooltip="Mes projets">
+                          <i class="uil uil-dashboard"></i>
+                        </a></li>
+                      <li class="list-inline-item ml-1"><a routerLink="investments" routerLinkActive="active"
+                          class="rounded" placement="bottom" ngbTooltip="My investments">
+                          <i class="uil uil-transaction"></i>
+                        </a></li>
+                      <li class="list-inline-item ml-1"><a routerLink="settings" routerLinkActive="active"
+                          class="rounded" placement="bottom" ngbTooltip="Settings">
+                          <i-feather name="tool" class="fea icon-sm fea-social"></i-feather>
+                        </a></li>
+                      <li class="list-inline-item ml-1"><a routerLink="preferences" routerLinkActive="active"
+                          class="rounded" placement="bottom" ngbTooltip="Préférences">
+                          <i class="uil uil-sign-out-alt"></i>
+                        </a></li>
+                    </ul>
+                    <!--end icon-->
+                  </div>
+                  <!--end col-->
+                </div>
+                <!--end row-->
+              </div>
+              <!--end col-->
+            </div>
+            <!--end row-->
+          </div>
+        </div>
+      </div>
+      <!--end col-->
+    </div>
+    <!--end row-->
+  </div>
+  <!--ed container-->
+</section>
+<!--end section-->
+<!-- Hero End -->
+
+<!-- Profilee Start -->
+<section class="section mt-60">
+  <div class="container mt-lg-3">
+    <div class="row">
+      <div class="col-lg-4 col-12 d-lg-block d-none">
+        <div class="sidebar sticky-bar p-4 rounded shadow">
+          <!-- <div class="widget pt-2">
+            <div class="media key-feature align-items-center p-3 rounded shadow">
+              <div class="media-body content ml-3">
+                <div class="d-flex justify-content-between my-2">
+                  <h4 class="title mb-0">Balance($) TRX : </h4>
+                  <p class="text-muted mb-0">{{ solde() }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="widget pt-2">
+            <div class="media key-feature align-items-center p-3 rounded shadow">
+              <div class="media-body content ml-3">
+                <div class="d-flex justify-content-between my-2">
+                  <h4 class="title mb-0">Address</h4>
+                  <p class="text-muted mb-0">{{ "address" }}</p>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <div class="widget">
+            <div class="row">
+              <div class="col-6 mt-4 pt-2">
+                <a routerLink="/me" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="accounts rounded d-block shadow text-center py-3">
+                  <span class="pro-icons h3 text-muted">
+                    <i class="uil uil-dashboard"></i>
+                  </span>
+                  <h6 class="title text-dark h6 my-0">Dashboard</h6>
+                </a>
+              </div>
+              <div class="col-6 mt-4 pt-2">
+                <a routerLink="my-projects" routerLinkActive="active"
+                  class="accounts rounded d-block shadow text-center py-3">
+                  <span class="pro-icons h3 text-muted">
+                    <i class="uil uil-list-ui-alt"></i>
+                  </span>
+                  <h6 class="title text-dark h6 my-0">My projects</h6>
+                </a>
+              </div>
+              <!--end col-->
+
+              <div class="col-6 mt-4 pt-2">
+                <a routerLink="investments" routerLinkActive="active"
+                  class="accounts rounded d-block shadow text-center py-3">
+                  <span class="pro-icons h3 text-muted">
+                    <i class="uil uil-transaction"></i>
+                  </span>
+                  <h6 class="title text-dark h6 my-0">Investments</h6>
+                </a>
+              </div>
+              <!--end col-->
+
+              <div class="col-6 mt-4 pt-2">
+                <a routerLink="preferences" routerLinkActive="active"
+                  class="accounts rounded d-block shadow text-center py-3">
+                  <span class="pro-icons h3 text-muted">
+                    <i class="uil uil-sign-out-alt"></i>
+                  </span>
+                  <h6 class="title text-dark h6 my-0">Preferences</h6>
+                </a>
+              </div>
+              <!--end col-->
+
+              <div class="col-12 mt-4 pt-2">
+                <a routerLink="settings" routerLinkActive="active"
+                  class="accounts rounded d-block shadow text-center py-3">
+                  <span class="pro-icons h3 text-muted">
+                    <i class="uil uil-setting"></i>
+                  </span>
+                  <h6 class="title text-dark h6 my-0">Settings</h6>
+                </a>
+              </div>
+              <!--end col-->
+            </div>
+            <!--end row-->
+          </div>
+        </div>
+      </div>
+      <!--end col-->
+
+      <div class="col-lg-8 col-12">
+
+        <router-outlet></router-outlet>
+
+      </div>
+      <!--end col-->
+    </div>
+    <!--end row-->
+  </div>
+  <!--end container-->
+</section>
+<!--end section-->
+<!-- Profilee End -->

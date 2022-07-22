@@ -1,0 +1,7 @@
+.formField:focus{
+    border-color: #77B825 !important;
+  }
+  .custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+   background-color: #77B825 !important;
+   border-color: #77B825 !important;
+  }

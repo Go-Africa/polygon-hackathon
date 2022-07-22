@@ -1,0 +1,54 @@
+
+<!-- Start -->
+<section class="section" style="padding-top: 10px;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 text-center">
+        <div class="section-title mb-4 pb-2">
+          <h4 class="title mb-4">Popular Categories</h4>
+          <p class="text-muted para-desc mx-auto mb-0">
+            Start investing now in projects with high profitability.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="!loading">
+      <div class="col-12 my-2">
+            <owl-carousel-o id="customer-testi" [options]="customOptions">
+              <ng-template carouselSlide *ngFor="let i of [1,2,3]">
+                <div class="card border-0 px-4">
+                  <div class="card-img-top">
+                    <ng-skeleton [skelDark]="share.getTheme() === 'dark'" [skelHeight]="100"></ng-skeleton>
+                  </div>
+                  <div class="card-body row">
+                    <div class="col-10" style="padding-top: 10px; padding-left: 0px;">
+                      <ng-skeleton [skelDark]="share.getTheme() === 'dark'" [skelHeight]="30"></ng-skeleton>
+                    </div>
+                    <div class="col-2 p-2 text-right">
+                      <ng-skeleton [skelDark]="share.getTheme() === 'dark'" [skelHeight]="30" [skelCircle]="true"></ng-skeleton>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+          </owl-carousel-o>
+      </div>
+    </div>
+    <div class="col-12 mt-4 pt-2" *ngIf="loading">
+      <owl-carousel-o id="customer-testi" [options]="customOptions">
+          <ng-template carouselSlide *ngFor="let cat of categories">
+              <div class="card catagories overflow-hidden rounded shadow border-0 mx-4">
+                <img [src]="cat.image" class="img-fluid" alt="">
+                <div class="card-body">
+                  <ul class="list-unstyled d-flex justify-content-between mb-0">
+                    <li><a [routerLink]="['/all-projects']" [queryParams]="{catId: cat.id}" class="title h6 text-dark stretched-link">{{ cat.nomCategorie }}</a></li>
+                    <li class="mb-0 small rounded bg-primary" title="25 projets"><i class="p-2">{{ cat.nombreProjet }}</i></li>
+                  </ul>
+                </div>
+              </div>
+          </ng-template>
+      </owl-carousel-o>
+    </div>
+    </div>
+</section>
+
+

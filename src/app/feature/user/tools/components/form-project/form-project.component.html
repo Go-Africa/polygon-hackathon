@@ -1,0 +1,123 @@
+
+<section class="section">
+  <div class="container" *ngIf="!load">
+    <div class="row">
+      <div class="col-12">
+        <form method="POST" action="/submit-project" [formGroup]="projectForm" (ngSubmit)="onSubmitProject()">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="form-group position-relative">
+                <label>Project Title</label>
+                <i-feather name="folder" class="fea icon-sm icons"></i-feather>
+                <input name="title" id="title" type="text" class="form-control pl-5" placeholder="project title"
+                formControlName="title">
+              </div>
+              <div class="foot-subscribe form-group position-relative" *ngIf="(projectForm.invalid && (projectForm.get('title')?.dirty) || sent)" >
+                <small *ngIf="projectForm.get('title')?.hasError('required')" class="text-danger">
+                  title is required
+                </small>
+                <small *ngIf="projectForm.get('title')?.hasError('minlength')" class="text-danger">
+                  min characters is 5
+                </small>
+              </div>
+
+              <div class="form-group position-relative">
+                <label>Project Category</label>
+                <select class="form-control custom-select" id="Sortbylist-job" formControlName="category">
+                  <option *ngFor="let cat of categories" [value]="cat.id">{{cat.nomCategorie}}</option>
+                </select>
+              </div>
+              <div class="foot-subscribe form-group position-relative" *ngIf="(projectForm.invalid && (projectForm.get('category')?.dirty) || sent)" >
+                <small *ngIf="projectForm.get('category')?.hasError('required')" class="text-danger">
+                  Category is required
+                </small>
+              </div>
+
+              <div class="form-group position-relative">
+                <label>Description</label>
+                <i-feather name="book" class="fea icon-sm icons"></i-feather>
+                <textarea name="descText" id="descText" rows="22" class="form-control pl-5" placeholder="Description :"
+                formControlName="descText">
+                </textarea>
+              </div>
+              <div class="foot-subscribe form-group position-relative" *ngIf="(projectForm.invalid && (projectForm.get('descText')?.dirty) || sent)" >
+                <small *ngIf="projectForm.get('descText')?.hasError('required')" class="text-danger">
+                  Description is required
+                </small>
+                <small *ngIf="projectForm.get('descText')?.hasError('minlength')" class="text-danger">
+                  min length is 10 characters
+                </small>
+              </div>
+
+              <br>
+              <h4 class="mt-3 mb-3">Project Amount Estimations</h4>
+              <div class="form-group position-relative">
+                <label>Project Goal Amount</label>
+                <i-feather class="fea icon-sm icons d-inline-block"><small>$</small></i-feather>
+                <input name="montantDemander" id="montantDemander" type="number" class="form-control" style="padding-left: 60px;" placeholder="Goal amount"
+                formControlName="montantDemander">
+              </div>
+              <div class="foot-subscribe form-group position-relative" *ngIf="(projectForm.invalid && (projectForm.get('montantDemander')?.dirty) || sent)" >
+                <small *ngIf="projectForm.get('montantDemander')?.hasError('required')" class="text-danger">
+                  Your project must have a goal amount
+                </small>
+              </div>
+
+              <div class="form-group position-relative">
+                <label>Amount of one Share</label>
+                <i-feather class="fea icon-sm icons h6"><small>$</small></i-feather>
+                <input name="title" id="title" type="number" class="form-control" style="padding-left: 60px;" placeholder="Amount of one Share in your project"
+                formControlName="montantMinimum">
+              </div>
+            </div>
+            <div class="col-md-5">
+              <!--div class="form-group downloadBut position-relative mt-4" placement="bottom" ngbTooltip="Insérer l'image de couverture"
+              (click)="Image.click()">
+                  <img [src]="imageUrl" class="uploadedImg">
+                  <input type="file" class="d-none" #Image accept="image/*" (change)="handleFileInput($event)">
+              </div--><br>
+
+              <div class="form-group position-relative buttonImage">
+                <label for="">Project Picture</label>
+                <div class="button-control position-absolute">
+                  <button type="button" class="btnUpload h6" placement="bottom" ngbTooltip="Insérer" (click)="Image.click()">
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                  </button>
+                  <button type="reset" class="btnReset h6" placement="bottom" ngbTooltip="Effacer" (click)="resetFile()">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div class="img-control downloadBut" placement="bottom" ngbTooltip="Insérer l'image de couverture"
+                (click)="Image.click()">
+                  <img [src]="imageUrl" class="uploadedImg">
+                  <input type="file" class="d-none" #Image accept="image/*" (change)="handleFileInput($event)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row d-flex align-items-center justify-content-center">
+            <div class="col-6 d-flex align-items-center justify-content-center">
+              <button type="submit" class="btn btn-primary w-100 d-flex align-items-center justify-content-center" raised-button>Create your project</button>
+            </div>
+            <!--end col-->
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12" *ngIf="load">
+    <div class="row justify-content-center p-5 pb-0 mb-0">
+      <ngx-loading-spinner mini></ngx-loading-spinner>
+    </div>
+    <div class="row justify-content-center">
+      <p class="text-center">
+        <small>We are creating your project...</small>
+      </p>
+    </div>
+  </div>
+</section>
+
+
+

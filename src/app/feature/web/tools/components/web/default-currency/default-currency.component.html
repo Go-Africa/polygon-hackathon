@@ -1,0 +1,48 @@
+<div class="card shadow-lg rounded">
+    <div class="card-header bg-transparent">
+        <span class="text-center text-muted">Bienvenue sur Go-Africa</span>
+        <button class="btn btn-link close" ><span class="text-muted" (click)="showCloseOption(saveDefault)">&times;</span></button>
+    </div>
+    <div class="card-body py-5">
+        <p class="text-center">
+            <img src="assets/go-africa/Welcome.svg" alt="" class="img-fluid">
+        </p>
+        <div class="mt-2">
+            <h3>Veuillez effectuer vos choix pour une navigation sûre dans notre site</h3>
+            <form [formGroup]="dataPreferencing">
+                <div class="form-group position-relative">
+                    <label >Apparence/thème</label>
+                    <select class="form-control" formControlName="theme">
+                        <option value="dark">Sombre (par défaut)</option>
+                        <option value="light">Lumière</option>
+                    </select>
+                </div>
+                <div class="form-group position-relative">
+                    <label >Monnaie</label>
+                    <select class="form-control" formControlName="currency">
+                        <option value="FCFA">Franc CFA (par défaut)</option>
+                        <option value="EUR">Euro</option>
+                        <option value="USD">Dollar</option>
+                    </select>
+                </div>
+
+                <div class="row my-2 justify-content-between px-3">
+                    <button class="btn btn-secondary" (click)="modal.dismissAll()" *ngIf="isAlreadyCurrency()">Fermer<i class="fa fa-check-circle-o"></i></button>
+                    <button class="btn btn-primary" (click)="saveData()">Sauvegarder <i class="fa fa-check-circle-o"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<ng-template #saveDefault let-modal>
+    <div class="card p-2">
+        <div class="card-header">Garder les valeurs par défaut ?</div>
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
+                <button class="btn btn-primary" (click)="saveDefaultData()">Garder</button>
+            </div>
+        </div>
+    </div>
+</ng-template>

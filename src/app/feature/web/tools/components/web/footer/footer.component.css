@@ -1,0 +1,36 @@
+.gifLoad{
+    max-height: 50px;
+    max-height: 50px;
+    padding: 0;
+    margin: 0;
+}
+
+.btnPayement{
+  color: white;
+  height: 39px;
+  width: 57px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 6px;
+}
+
+.om{
+  background-image: url('../../../../../../../assets/images/payments/payment/om.png');
+  background-color: #000000;
+}
+
+.momo{
+  background-image: url('../../../../../../../assets/images/payments/payment/momo.png');
+  background-color: #feca18;
+}
+
+.stripe{
+  background-image: url('../../../../../../../assets/images/payments/payment/stripe.png');
+  background-color: #6772e5;
+}
+
+.cash{
+  background-image: url('../../../../../../../assets/images/payments/visaa.png');
+  background-color: white;
+}

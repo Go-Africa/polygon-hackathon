@@ -1,0 +1,92 @@
+.background {
+  filter: blur(4px);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.foreground {
+  /*backdrop-filter: blur(10px);*/
+  backdrop-filter: brightness(0.5);
+  padding: 20px;
+}
+.btnPayement{
+  color: white;
+  /*max-width: 175px;
+  min-width: 100px;
+  max-height: 175px;
+  min-height: 100px;*/
+  height: 20vmin;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.btnPayement1{
+  color: white;
+  height: 10vh;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.om{
+  background-image: url('../../../../../assets/images/payments/payment/om.png');
+  background-color: #000000;
+}
+
+.momo{
+  background-image: url('../../../../../assets/images/payments/payment/momo.png');
+  background-color: #feca18;
+}
+
+.stripe{
+  background-image: url('../../../../../assets/images/visa-mastercard.png');
+  background-color: #6772e5;
+}
+
+.cash{
+  background-color: #ad66a0;
+  font-weight: bold;
+  font-size: larger;
+}
+
+
+.minus{
+  font-weight: lighter;
+}
+
+
+.liked{
+  color: #77b825;
+}
+
+.scrollBar{
+  overflow-y: scroll;
+  max-height: 500px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Handle on focus */
+::-webkit-scrollbar-thumb:active {
+  background: #77b825;
+}

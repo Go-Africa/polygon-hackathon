@@ -1,0 +1,127 @@
+<header id="topnav" class="defaultscroll sticky" (window:scroll)="windowScroll()" [class]="navClass">
+  <div class="container" style="backdrop-filter: blur(10px);">
+    <!-- style="backdrop-filter: brightness(0.5);"  -->
+    <!-- Logo container-->
+    <!-- <a class="logo" routerLink="/" *ngIf="isSwitch">
+      <img src="assets/images/go-africa-logo.png" class="logoImg" height="24" alt="">
+    </a> -->
+    <div class="mr-auto" *ngIf="!isSwitch; else whiter">
+      <a class="logo" routerLink="/">
+        <img src="assets/images/logoDark.png" class="logoImg" height="24" alt="">
+      </a>
+    </div>
+    <ng-template #whiter>
+      <div class="mr-auto" *ngIf="isSwitch">
+        <a class="logo" routerLink="/">
+          <img src="assets/images/go-africa-logo.png" class="logoImg" height="24" alt="">
+        </a>
+      </div>
+    </ng-template>
+
+    <div class="d-none d-lg-flex justify-content-between pt-2">
+      <ul class="navigation-menu" [class]="navClass">
+        <li class="text-center"><a routerLink="/" class="nav-link-ref">Home</a></li>
+        <li><a routerLink="/about" class="nav-link-ref">About us</a></li>
+        <li><a routerLink="/all-projects" class="nav-link-ref" *ngIf="auth">Projects</a></li>
+        <li><a routerLink="/contact" class="nav-link-ref">contact</a></li>
+      </ul>
+      <!-- Auth section-->
+      <div class="pt-sm-3 pt-lg-0 d-flex justify-content-between">
+        <div *ngIf="auth" class="buy-button" style="line-height: 20px;">
+          <ul class="navigation-menu" [class]="navClass">
+            <li class="has-submenu">
+              <a href="javascript:void(0)" (click)="onMenuClick($event)" class="text-capitalize">
+                <img [src]="user.profilePicture || 'assets/images/go-africa/default-avatar.png'"
+                  class="img-fluid avatar avatar-ex-sm rounded-circle mr-1 ">{{ user.name }}
+              </a><span class="menu-arrow"></span>
+
+              <ul class="submenu">
+                <li><a class="nav-link-ref" routerLink="/me">My profile</a></li>
+                <li><a class="nav-link-ref" routerLink="/me/my-projects">My projects</a></li>
+                <li><a class="nav-link-ref" routerLink="/me/investments">My investments</a></li>
+                <li><a class="nav-link-ref" href="javascrip:void()" (click)="logout()">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="buy-button" style="margin: 0px 5px 0px 0px;" *ngIf="!auth">
+          <a routerLink="/register" class="btn accountButton"><i class="mdi mdi-account-plus"></i>&nbsp;Create an account</a>
+        </div>
+        <div class="buy-button" style="margin: 0px 5px 0px 0px;" *ngIf="!auth">
+          <a routerLink="/login" class="btn loginButton"><i class="mdi mdi-login"></i>&nbsp;Login</a>
+        </div>
+        <!-- Theme switcher -->
+        <div class="buy-button" style="margin: 0px 10px 0px 0px;">
+          <ui-switch *ngIf="!isLoadingSwitch" [checked]="isSwitch" (change)="onChangeThemeMode($event)" size="medium">
+            <i class="fa fa-moon-o" aria-hidden="true" *ngIf="!isSwitch" style="color: #77b825;"></i>
+            <i class="fa fa-sun-o" aria-hidden="true" *ngIf="isSwitch" style="color: #77b825"></i>
+          </ui-switch>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-extras">
+      <div class="menu-item">
+        <a class="navbar-toggle" (click)="toggleMenu()" [ngClass]="{'open': isCondensed === true}">
+          <div class="lines">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div id="navigation">
+      <!-- Navigation Menu-->
+      <ul class="navigation-menu py-4 d-lg-none" [class]="navClass">
+        <li><a href="javascript:void(0);" class="nav-link-ref text-capitalize text-muted">Welcome to Go-Africa</a></li>
+        <li><a (click)="goToLink('/')" class="nav-link-ref">Home</a></li>
+        <li><a (click)="goToLink('/about')" class="nav-link-ref">About us</a></li>
+        <li><a (click)="goToLink('/all-projects')" class="nav-link-ref" *ngIf="auth">Projets</a></li>
+        <li><a (click)="goToLink('/contact')" class="nav-link-ref">contact</a></li>
+        <li><a (click)="goToLink('/become-pro')" class="nav-link-ref">Promotion</a></li>
+
+        <hr>
+        <li class="has-submenu my-4" *ngIf="auth">
+          <a href="javascript:void(0)" (click)="onMenuClick($event)" class="">
+            My account
+          </a><span class="menu-arrow" style="margin-top: 5px;"></span>
+          <ul class="submenu">
+            <li><a class="nav-link-ref" (click)="goToLink('/me')">My profile</a></li>
+            <li><a class="nav-link-ref my-2" (click)="goToLink('/me/my-projects')">My projects</a></li>
+            <li><a class="nav-link-ref" (click)="goToLink('/me/investments')">My investments</a></li>
+            <li><a class="nav-link-ref my-2" href="javascrip:void()" (click)="logout()">Logout</a></li>
+          </ul>
+        </li>
+        <!-- While user is not logged in -->
+        <li class="my-2" *ngIf="!auth">
+          <a href="javascript:void(0);" class="nav-link-ref text-muted">You are not connected</a>
+        </li>
+        <li class="" *ngIf="!auth">
+          <a (click)="goToLink('/register')" class="nav-link-ref"><i class="mdi mdi-account-plus"></i>&nbsp;Create an account</a>
+        </li>
+        <li class="my-2" *ngIf="!auth">
+          <a (click)="goToLink('/login')" class="nav-link-ref"><i class="mdi mdi-account-plus"></i>&nbsp;Login</a>
+        </li>
+
+        <hr>
+      </ul>
+      <div class="d-flex justify-content-center mb-5 d-lg-none">
+        <div class=" border rounded mx-auto p-2">
+          <!-- <small class="text-muted mr-2 mt-2">Thème</small> -->
+          <ui-switch *ngIf="!isLoadingSwitch" [checked]="isSwitch" (change)="onChangeThemeMode($event)" size="medium">
+            <i class="fa fa-moon-o" aria-hidden="true" *ngIf="!isSwitch" style="color: #77b825;"></i>
+            <i class="fa fa-sun-o" aria-hidden="true" *ngIf="isSwitch" style="color: #77b825"></i>
+          </ui-switch>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <!--end navigation-->
+  <!--end container-->
+</header>
+<!--end header-->
+<!-- Navbar End -->

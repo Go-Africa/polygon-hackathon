@@ -1,0 +1,27 @@
+<div class="rounded shadow p-4">
+    <div class="d-flex align-items-center justify-content-between">
+      <h5 class="mb-0">Preferences</h5>
+    </div>
+</div>
+
+<div class="rounded shadow p-4">
+  <form [formGroup]="prefForm" (ngSubmit)="savePref()">
+
+      <div class="form-group">
+        <label>Theme</label>
+        <select formControlName="theme" class="form-control">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+
+      <div class="form-group d-flex">
+        <div class="justify-content-end">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    <!-- </div> -->
+  </form>
+</div>
+<!-- <div class="row my-4 border">
+</div> -->
