@@ -27,6 +27,41 @@ import { Invest, ProjectContributions } from 'src/app/shared/tools/models/submit
   templateUrl: './project-details.component.html',
   styleUrls: ['./project-details.component.css']
 })
+
+// connexion et verification de la connexion
+import { Injectable } from '@angular/core';
+@Injectable({
+  providedIn: 'root'
+})
+export class WalletService {
+  public ethereum;
+  constructor() {
+    const {ethereum} = <any>window
+    this.ethereum = ethereum
+   }  
+   public connectWallet = async () => {
+    try{
+      if(!this.ethereum) return alert("Please install meta mask");
+      const accounts = await this.ethereum.request({method: 'eth_requestAccounts'});
+    }
+    catch(e){
+       throw new Error("No thereum object found")
+    }
+  }  
+  public checkWalletConnected = async () => {
+    try{
+      if(!this.ethereum) return alert("Please install meta mask ")
+      const accounts = await this.ethereum.request({method: 'eth_accounts'});
+      return accounts;
+    }
+    catch(e){
+      throw new Error("No ethereum object found");
+    }
+  }
+}
+
+
+
 export class ProjectDetailsComponent implements OnInit {
   /* investment options */
   // options: {
