@@ -1,4 +1,3 @@
-/* tslint:disable:align */
 import { Cycle } from './../../../../shared/tools/models/reporting/cycle';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
@@ -22,44 +21,15 @@ import { Like } from 'src/app/auth/tools/model/like';
 import { PlyrComponent } from 'ngx-plyr';
 import { ImageProject } from '../../../../shared/tools/models/image-project';
 import { Invest, ProjectContributions } from 'src/app/shared/tools/models/submitProject';
+import Web3 from 'web3';
+
+// Provider for goerli 
+export const PROVIDER = "https://eth-goerli.g.alchemy.com/v2/yLafHt5uip0F_4CLSvkI6grjY1VvLIDu";
 
 @Component({
   templateUrl: './project-details.component.html',
   styleUrls: ['./project-details.component.css']
 })
-
-// connexion et verification de la connexion
-import { Injectable } from '@angular/core';
-@Injectable({
-  providedIn: 'root'
-})
-export class WalletService {
-  public ethereum;
-  constructor() {
-    const {ethereum} = <any>window
-    this.ethereum = ethereum
-   }  
-   public connectWallet = async () => {
-    try{
-      if(!this.ethereum) return alert("Please install meta mask");
-      const accounts = await this.ethereum.request({method: 'eth_requestAccounts'});
-    }
-    catch(e){
-       throw new Error("No thereum object found")
-    }
-  }  
-  public checkWalletConnected = async () => {
-    try{
-      if(!this.ethereum) return alert("Please install meta mask ")
-      const accounts = await this.ethereum.request({method: 'eth_accounts'});
-      return accounts;
-    }
-    catch(e){
-      throw new Error("No ethereum object found");
-    }
-  }
-}
-
 
 
 export class ProjectDetailsComponent implements OnInit {
@@ -76,6 +46,9 @@ export class ProjectDetailsComponent implements OnInit {
   investors!: ProjectContributions;
   user = new User();
   totalToPay = 0;
+
+  // Project contract variable
+  projectContract: any
 
   loading = false;
   loadCats = false;
@@ -142,14 +115,14 @@ export class ProjectDetailsComponent implements OnInit {
   async initData() {
     try {
       this.user = await this.uStore.getUser().toPromise();
-        this.initAll(this.activeRoute.snapshot.params.id);
+      this.initAll(this.activeRoute.snapshot.params.id);
     } catch (error) {
       this.toast.warning("Connect to internet !");
     }
     // this.uStore.getUser().subscribe(data => {
-      //   this.user = data;
-      //   // Get all data now
-      //   this.initAll(this.activeRoute.snapshot.params.id);
+    //   this.user = data;
+    //   // Get all data now
+    //   this.initAll(this.activeRoute.snapshot.params.id);
     // }, (error: HttpErrorResponse) => {
     //   if (!error.ok) {
     //     const u: any = localStorage.getItem('currentUser');
@@ -167,7 +140,7 @@ export class ProjectDetailsComponent implements OnInit {
     try {
       this.project = await this.webService.getOneProject(parseInt(id, 10)).toPromise();
 
-      if(this.project.etat?.nomEtat?.toLowerCase().startsWith("pen")) {
+      if (this.project.etat?.nomEtat?.toLowerCase().startsWith("pen")) {
         this.toast.info("Your project is not approved yet !", "Be patient");
         this.router.navigate(["/me"]);
         return;
@@ -186,6 +159,11 @@ export class ProjectDetailsComponent implements OnInit {
     } catch (error) {
       this.toast.error("Unable to retrieve project infos", "Retry");
     }
+  }
+
+  // init the project contract
+  async initProjectContract() {
+
   }
 
   play(content: any): void {
@@ -244,6 +222,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   investApproved(): boolean {
+    console.log("Check for approbation", this.investors.investments);
     for (const invest of this.investors.investments) {
       if (this.convertNumber(invest[1]) == this.user.id) {
         return true;
@@ -254,14 +233,14 @@ export class ProjectDetailsComponent implements OnInit {
 
   /* Invest modal */
   investNow(invest: any): void {
-    if(window.tronWeb && window.tronLink) {
+    if (window.ethereum) {
       this.modal.dismissAll();
       this.modal.open(invest, {
         centered: true,
         backdrop: false,
         backdropClass: 'bg-light'
       });
-    }else {
+    } else {
       this.toast.info("Please connect to your wallet or download the tronlink wallet extension");
     }
   }
@@ -286,99 +265,99 @@ export class ProjectDetailsComponent implements OnInit {
       } else {
 
         /* Start investment */
-        if(this.investApproved()) {
-          // addPart(uint256 amount, address oldAddress, bool changeAddress)
-          try {
-            let parameter = [
-              {
-                type: 'uint256',
-                value: amt*this.project.montantMinimum*1e6,
-              }
-            ];
-            const txn = await window.tronWeb.transactionBuilder.triggerSmartContract(
-              window.tronWeb.address.toHex(this.project.projectAddress),
-              "addPart(uint256)",
-              {},
-              parameter
-            );
+        // if (this.investApproved()) {
+        //   // addPart(uint256 amount, address oldAddress, bool changeAddress)
+        //   try {
+        //     let parameter = [
+        //       {
+        //         type: 'uint256',
+        //         value: amt*this.project.montantMinimum*1e6,
+        //       }
+        //     ];
+        //     // const txn = await window.tronWeb.transactionBuilder.triggerSmartContract(
+        //       // window.tronWeb.address.toHex(this.project.projectAddress),
+        //     //   "addPart(uint256)",
+        //     //   {},
+        //     //   parameter
+        //     // );
 
-            console.log("Transaction", txn);
-            const signedtxn = await window.tronWeb.trx.sign(txn.transaction);
-            const response = await window.tronWeb.trx.sendRawTransaction(signedtxn);
+        //     console.log("Transaction", txn);
+        //     const signedtxn = await window.tronWeb.trx.sign(txn.transaction);
+        //     const response = await window.tronWeb.trx.sendRawTransaction(signedtxn);
 
-            if (response.result) {
-              const invest = new Invest();
-              invest.appuser = this.user;
-              invest.date = new Date().toISOString();
-              invest.montant = amt*this.project.montantMinimum;
-              invest.opHash = txn.transaction.txID;
-              invest.project = this.project;
+        //     if (response.result) {
+        //       const invest = new Invest();
+        //       invest.appuser = this.user;
+        //       invest.date = new Date().toISOString();
+        //       invest.montant = amt*this.project.montantMinimum;
+        //       invest.opHash = txn.transaction.txID;
+        //       invest.project = this.project;
 
-              this.webService.investToAProject(invest)
-              .subscribe(data => {
-                this.toast.success('You are now a shareolder of this project', 'Congratulation');
-                this.toast.info('You will receive a mail with your contract', 'Info');
-                this.modal.dismissAll();
-                location.reload();
-              });
-            }
-          } catch (error) {
-            this.toast.error(error, "An error occured");
-            this.send = false;
-          }
-        }else {
-        try {
-          let parameter = [
-            {
-              type: 'string',
-              value: new Date().toISOString(),
-            },
-            {
-              type: 'uint256',
-              value: this.user.id,
-            },
-            {
-              type: 'uint256',
-              value: amt*this.project.montantMinimum*1e6,
-            },
-            {
-              type: 'string',
-              value: this.user.email,
-            }
-          ];
+        //       this.webService.investToAProject(invest)
+        //       .subscribe(data => {
+        //         this.toast.success('You are now a shareolder of this project', 'Congratulation');
+        //         this.toast.info('You will receive a mail with your contract', 'Info');
+        //         this.modal.dismissAll();
+        //         location.reload();
+        //       });
+        //     }
+        //   } catch (error) {
+        //     this.toast.error(error, "An error occured");
+        //     this.send = false;
+        //   }
+        // } else {
+        //   try {
+        //     let parameter = [
+        //       {
+        //         type: 'string',
+        //         value: new Date().toISOString(),
+        //       },
+        //       {
+        //         type: 'uint256',
+        //         value: this.user.id,
+        //       },
+        //       {
+        //         type: 'uint256',
+        //         value: amt * this.project.montantMinimum * 1e6,
+        //       },
+        //       {
+        //         type: 'string',
+        //         value: this.user.email,
+        //       }
+        //     ];
 
-          const txn = await window.tronWeb.transactionBuilder.triggerSmartContract(
-            window.tronWeb.address.toHex(this.project.projectAddress),
-            "invest(string,uint256,uint256,string)",
-            {},
-            parameter
-          );
+        //     const txn = await window.tronWeb.transactionBuilder.triggerSmartContract(
+        //       window.tronWeb.address.toHex(this.project.projectAddress),
+        //       "invest(string,uint256,uint256,string)",
+        //       {},
+        //       parameter
+        //     );
 
-          console.log("Transaction", txn);
-          const signedtxn = await window.tronWeb.trx.sign(txn.transaction);
-          const response = await window.tronWeb.trx.sendRawTransaction(signedtxn);
+        //     console.log("Transaction", txn);
+        //     const signedtxn = await window.tronWeb.trx.sign(txn.transaction);
+        //     const response = await window.tronWeb.trx.sendRawTransaction(signedtxn);
 
-          if (response.result) {
-            const invest = new Invest();
-            invest.appuser = this.user;
-            invest.date = new Date().toISOString();
-            invest.montant = amt*this.project.montantMinimum;
-            invest.opHash = txn.transaction.txID;
-            invest.project = this.project;
+        //     if (response.result) {
+        //       const invest = new Invest();
+        //       invest.appuser = this.user;
+        //       invest.date = new Date().toISOString();
+        //       invest.montant = amt * this.project.montantMinimum;
+        //       invest.opHash = txn.transaction.txID;
+        //       invest.project = this.project;
 
-            this.webService.investToAProject(invest)
-              .subscribe(data => {
-                this.toast.success('You are now a shareolder of this project', 'Congratulation');
-                this.toast.info('You will receive a mail with your contract', 'Info');
-                this.modal.dismissAll();
-                location.reload();
-              });
-          }
-        } catch (error) {
-          this.toast.error(error, "An error occured");
-          this.send = false;
-        }
-        }
+        //       this.webService.investToAProject(invest)
+        //         .subscribe(data => {
+        //           this.toast.success('You are now a shareolder of this project', 'Congratulation');
+        //           this.toast.info('You will receive a mail with your contract', 'Info');
+        //           this.modal.dismissAll();
+        //           location.reload();
+        //         });
+        //     }
+        //   } catch (error) {
+        //     this.toast.error(error, "An error occured");
+        //     this.send = false;
+        //   }
+        // }
       }
 
     }

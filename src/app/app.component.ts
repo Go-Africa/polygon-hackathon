@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UserStorageService } from './shared/services/user-storage.service';
 import { RequestAccountsResponse } from './shared/tools/models/shared';
+import { WalletService } from './feature/web/service/wallet.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { RequestAccountsResponse } from './shared/tools/models/shared';
 export class AppComponent implements OnInit {
   hide = false;
 
-  constructor(public spinner: NgxSpinnerService, private uStore: UserStorageService) { }
+  constructor(public spinner: NgxSpinnerService, private uStore: UserStorageService, private walletSerivce: WalletService) { }
 
   ngOnInit(): void {
     this.spinner.show();
@@ -21,20 +22,19 @@ export class AppComponent implements OnInit {
       this.hide = true;
 
       this.initData();
-
-      // window.tronWeb.trx
-      //   .getAccount(window.tronWeb.defaultAddress.base58)
-      //   .then(result => console.log("Account",result));
-      //   alert("Default address: " + window.tronWeb.defaultAddress.base58);
+      
     }, 5000);
-
-    // window.onscroll = () => {
-    //   // tronLink.request({method: 'tron_requestAccounts'})
-    // }
   }
 
   async initData() {
-    const res: RequestAccountsResponse = await window.tronLink.request({method: 'tron_requestAccounts'});
-    console.log("Response", res);
+    try {
+      const isConnected = await this.walletSerivce.checkWalletConnected();
+
+      // console.log("go Africa Contract", contract);
+    } catch (error) {
+      console.log("Error while connecting", error);
+    }
+    // const res: RequestAccountsResponse = await window.tronLink.request({method: 'tron_requestAccounts'});
+    // console.log("Response", res);
   }
 }

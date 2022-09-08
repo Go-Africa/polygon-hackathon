@@ -16,20 +16,25 @@ if (environment.production) {
 // Solidity node: https://api.nileex.io/
 // Event server: https://event.nileex.io/
 
+import ctr from '../contracts/GoAfrica.json';
+
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
 
 window.onload = function () {
   if (!window.ethereum) {
-    /* Initialize tronWeb connexion */
-    this.provider =  this.web3Modal.connect(); // set provider
-    this.web3js = new Web3(this.provider); // create web3 instance
-    this.accounts =  this.web3js.eth.getAccounts(); 
-
-    this.contract = new this.web3js.eth.Contract(contract_abi, contract_address);
-
-    const contract = this.contract
+    /* Initialize connexion */
+    
+  }else {
+    // const web3 = new Web3(); // create web3 instance
+    // web3.setProvider(new web3.providers.HttpProvider("https://eth-goerli.g.alchemy.com/v2/yLafHt5uip0F_4CLSvkI6grjY1VvLIDu"));
+    // // const contract = this.contract
+    // const accounts =  web3.eth.getAccounts(); 
+    // console.log("Acount taken", accounts);
+    // contract = web3.eth.Contract(ctr.abi, ctr.networks[5].address);
+    
+    // console.log("Default Contract", contract);
 
   }
 }

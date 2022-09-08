@@ -63,7 +63,6 @@ export class ContactComponent implements OnInit {
 
   /* Soumission du formulaire */
   onSendMessage(): void{
-    window.tronWeb.trx.sendToken("TVDGpn4hCSzJ5nkHPLetk8KQBtwaTppnkr",1000,'100010');
     // const isAllNull: boolean = this.onVerifyContactFormIsNull();
     // this.sent = true;
     // this.load= true;
